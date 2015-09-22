@@ -1,13 +1,26 @@
 #CREATE A LISTVIEW FROM A LIST OF OBJECT
 
-1) create in the activity a ListView item in the XML
+Our objective here is to display a custom ListView in our Activity using a list of object
+In this case, we will use a list of Student with a firstname and a lastname.
 
-you'll have first to create and populate the list object (with getter)
+##1) Add in the activity XML a ListView item
+*activity_main.xml*
+```
+<ListView
+    android:id="@+id/listViewStudent"
+    (...) />
+```
 
+Attributes of the Activity:
+- List<Student> studentList : contain our list of Student or whatever.
+- ListView lvStudent : this is the listview that will match the listview you define in the activity xml.
+- ListAdapter lvAdapter : THIS class adapter will be create in part 3.
+
+*Activity.java*
 ```
     private ListView lvStudent;
     private List<Student> studentList;
-    private ListAdapter lvAdapter;   //custom list adatpeur
+    private ListAdapter lvAdapter;
 
 
     @Override
@@ -15,16 +28,17 @@ you'll have first to create and populate the list object (with getter)
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_list);
 
-		  // listViewStudent is the id of our ListView in the activity XML File
         	lvStudent = (ListView) findViewById(R.id.listViewStudent);
-			lvAdapter = new ListAdapter(this, studentList);
-			lv.setAdapter(lvAdapter);
+			    lvAdapter = new ListAdapter(this, studentList);
+			    lv.setAdapter(lvAdapter);*
     }
 
 ```
 
-2) create the XML Layout for each item of our listView in the Layout Folder
+##2) create the XML Layout that will be use to display each item of our list
 
+The good things is that we can completly customize this layout, adding images, TextViews...
+So now we will add two TextViews that will at the end display the firstname and lastname.
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -42,11 +56,15 @@ you'll have first to create and populate the list object (with getter)
 
 ```
 
-3) create ListAdapter 
+##3) create ListAdapter class
 
+This is the most important part, We will create a class that will provide us a constructor which will take
+as argument, the context of the activity and the list of object to display.
+You just need to copy/paste the code and adapt it to your own project.
 
 ```
 public class ListAdapter extends ArrayAdapter {
+
     List<Student> listStudent;
     LayoutInflater mInflater;
     Context context;
@@ -63,26 +81,18 @@ public class ListAdapter extends ArrayAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
 
-        /* we first test if the convertview is null (for the first raws when we load the activity)
-
-         */
-        if (convertView == null) {
-
+        if (convertView == null)
+        {
             convertView = mInflater.inflate(R.layout.listview_item_student,parent,false);
-            // inflate custom layout called row
             holder = new ViewHolder();
-            // we do the mapping with our xml textviews
+            
+            // we do the mapping with our xml textviews already define in part 2)
             holder.element1 = (TextView) convertView.findViewById(R.id.element1);
             holder.element2 =(TextView) convertView.findViewById(R.id.element2);
 
             // we set a tag to our view to re-use it
             convertView.setTag(holder);
         }
-        /*
-            else / we already create a view and we will use this space
-            we re-uase the older view to display data, so this will pattern we can display 900 rows with the same
-            consumption.
-         */
         else
         {
             holder = (ViewHolder)convertView.getTag();
@@ -91,20 +101,27 @@ public class ListAdapter extends ArrayAdapter {
 
         // we finally set our values here
         Student student = listStudent.get(position);
-        holder.element1.setText(student.getFirstname());
-        holder.element2.setText("" + position)
-
+        holder.element1.setText(student.getFirstName());
+        holder.element2.setText(student.getLastName())
         return convertView;
 
     }
 
     static class ViewHolder
     {
-        // ici les elements xml 
         TextView element1;
         TextView element2;
-
     }
 }
 
 ```
+
+This pattern (testing convertView and setting a tag) is very good for the memory,
+In fact we are only displaying 8 items (for example) on my droid screen, so why should we load all our item ??
+Here is how the code works :
+
+- We test if the convertView is null ?
+> it's usually null when we start the activity.
+> not null means that the space was already use so at the end we re-use the older view to display data.
+
+so this pattern can display 900 rows with the same memory consumption as 8 rows.
