@@ -12,12 +12,12 @@ In this case, we will use a list of Student with a firstname and a lastname.
 ```
 
 Attributes of the Activity:
-- List<Student> studentList : contain our list of Student or whatever.
-- ListView lvStudent : this is the listview that will match the listview you define in the activity xml.
-- ListAdapter lvAdapter : THIS class adapter will be create in part 3.
+- studentList : contain our list of Student or whatever.
+- lvStudent : this is the listview that will match the listview you define in the activity xml.
+- lvAdapter : THIS class adapter will be create in part 3.
 
 *Activity.java*
-```
+```java
     private ListView lvStudent;
     private List<Student> studentList;
     private ListAdapter lvAdapter;
@@ -40,7 +40,8 @@ Attributes of the Activity:
 The good things is that we can completly customize this layout, adding images, TextViews...
 So now we will add two TextViews that will at the end display the firstname and lastname.
 
-```
+*listview_item_student*
+```java
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout (...) >
 
@@ -62,7 +63,8 @@ This is the most important part, We will create a class that will provide us a c
 as argument, the context of the activity and the list of object to display.
 You just need to copy/paste the code and adapt it to your own project.
 
-```
+*ListAdapter class*
+```java
 public class ListAdapter extends ArrayAdapter {
 
     List<Student> listStudent;
@@ -85,7 +87,8 @@ public class ListAdapter extends ArrayAdapter {
         {
             convertView = mInflater.inflate(R.layout.listview_item_student,parent,false);
             holder = new ViewHolder();
-            
+
+            // ** CHANGE HERE ** //
             // we do the mapping with our xml textviews already define in part 2)
             holder.element1 = (TextView) convertView.findViewById(R.id.element1);
             holder.element2 =(TextView) convertView.findViewById(R.id.element2);
@@ -98,7 +101,7 @@ public class ListAdapter extends ArrayAdapter {
             holder = (ViewHolder)convertView.getTag();
         }
 
-
+        // ** CHANGE HERE ** //
         // we finally set our values here
         Student student = listStudent.get(position);
         holder.element1.setText(student.getFirstName());
@@ -109,19 +112,20 @@ public class ListAdapter extends ArrayAdapter {
 
     static class ViewHolder
     {
+        // ** CHANGE HERE ** //
         TextView element1;
         TextView element2;
     }
 }
 
 ```
+## To Resume..
 
 This pattern (testing convertView and setting a tag) is very good for the memory,
-In fact we are only displaying 8 items (for example) on my droid screen, so why should we load all our item ??
-Here is how the code works :
+In fact we are only displaying 8 items (for example) on screen
+because it's not necessary to load all the view if we don't see all of them.
+having 800 objects will be the same as having 10 objects in the list (in term of memory consumption).
 
-- We test if the convertView is null ?
-> it's usually null when we start the activity.
-> not null means that the space was already use so at the end we re-use the older view to display data.
-
-so this pattern can display 900 rows with the same memory consumption as 8 rows.
+We test if the convertView is null ?
+NULL : it's usually null when we start the activity.
+NOT NULL : means that the view is already use so we will re-use it to display data.
