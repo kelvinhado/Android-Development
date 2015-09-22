@@ -127,7 +127,7 @@ public class ListAdapter extends ArrayAdapter {
 
 
 
-## To Resume..
+### To SumUp..
 
 This pattern (testing convertView and setting a tag) is very good for the memory,
 In fact we are only displaying 8 items (for example) on screen
