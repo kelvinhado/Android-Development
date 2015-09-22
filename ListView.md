@@ -1,20 +1,22 @@
-#CREATE A LISTVIEW FROM A LIST OF OBJECT
+##CREATE A LISTVIEW FROM A LIST OF OBJECT
 
 Our objective here is to display a custom ListView in our Activity using a list of object
 In this case, we will use a list of Student with a firstname and a lastname.
 
-##1) Add in the activity XML a ListView item
+
+
+###1) Add in the activity XML a ListView item
 *activity_main.xml*
-```
+```xml
 <ListView
     android:id="@+id/listViewStudent"
     (...) />
 ```
 
 Attributes of the Activity:
-- studentList : contain our list of Student or whatever.
+- studentList : contain our list of Student objects.
 - lvStudent : this is the listview that will match the listview you define in the activity xml.
-- lvAdapter : THIS class adapter will be create in part 3.
+- lvAdapter : THIS class adapter will be created in part 3.
 
 *Activity.java*
 ```java
@@ -35,13 +37,15 @@ Attributes of the Activity:
 
 ```
 
-##2) create the XML Layout that will be use to display each item of our list
+
+
+###2) create the XML Layout that will be use to display each item of our list
 
 The good things is that we can completly customize this layout, adding images, TextViews...
 So now we will add two TextViews that will at the end display the firstname and lastname.
 
 *listview_item_student*
-```java
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout (...) >
 
@@ -54,10 +58,11 @@ So now we will add two TextViews that will at the end display the firstname and 
 			(...) />
 
 </RelativeLayout>
-
 ```
 
-##3) create ListAdapter class
+
+
+###3) create the Adapter
 
 This is the most important part, We will create a class that will provide us a constructor which will take
 as argument, the context of the activity and the list of object to display.
@@ -119,6 +124,9 @@ public class ListAdapter extends ArrayAdapter {
 }
 
 ```
+
+
+
 ## To Resume..
 
 This pattern (testing convertView and setting a tag) is very good for the memory,
@@ -127,5 +135,7 @@ because it's not necessary to load all the view if we don't see all of them.
 having 800 objects will be the same as having 10 objects in the list (in term of memory consumption).
 
 We test if the convertView is null ?
+
 NULL : it's usually null when we start the activity.
+
 NOT NULL : means that the view is already use so we will re-use it to display data.
