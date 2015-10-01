@@ -1,2 +1,2 @@
 # Android-Development
-Here is my android developtment section.
+Here is the Android toolbox section. Click on the topic which you are interested in.

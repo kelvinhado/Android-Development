@@ -1,11 +1,11 @@
 ## Download and Parse Json object
 
-Most of the connection between server and client are using Json format to transfert data.
+Most of the connections between servers and clients are using Json format.
 In Android it's now forbidden to make *http request* on the main thread, before we had to implement an "AsyncTask" to run request but now the can directly use the **Volley** and **Jackson libraries** that will do all the job for us !
 
 Documentations:
 - Volley : https://developer.android.com/training/volley/simple.html
-- Jackson : http://www.tutos-android.com/parsing-json-jackson-android
+- Jackson : http://www.tutos-android.com/parsing-json-jackson-android or
 https://github.com/FasterXML/jackson-databind
 
 We will first get the json from the server (using Volley) and then automatically convert this Json to a ObjectArray.
