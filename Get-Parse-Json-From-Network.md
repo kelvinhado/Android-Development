@@ -6,6 +6,7 @@ In Android it's now forbidden to make *http request* on the main thread, before 
 Documentations:
 - Volley : https://developer.android.com/training/volley/simple.html
 - Jackson : http://www.tutos-android.com/parsing-json-jackson-android
+https://github.com/FasterXML/jackson-databind
 
 We will first get the json from the server (using Volley) and then automatically convert this Json to a ObjectArray.
 
@@ -136,13 +137,6 @@ public class Employee {
     }
 }
 ```
-let's create anther class which extend from ArrayList to hold our objects :
-
-```java
-public class Employees<Employee> extends ArrayList<Employee> {
-   // we can leave it empty, it will inherited from ArrayList class.
-}
-```
 
 We are now ready to parse the Json. you just have to do like this :
 
@@ -152,7 +146,7 @@ final ObjectMapper objectMapper = new ObjectMapper();
 String jsonObect = response; //we are getting in from the onResponse in the *MainActivity.java*
 
 try {
-    Employees employeesList = objectMapper.readValue(response, Employees.class);
+    List<Employee> employees = objectMapper.readValue(response, new TypeReference<List<Employee>>(){});
     mTextView.setText(employeesList);
 }
 catch (IOException e) {
@@ -203,7 +197,7 @@ public class MainActivity extends ActionBarActivity {
               @Override
               public void onResponse(String response) {
                   try {
-                          Employees employees = objectMapper.readValue(response, Employees.class);
+                          List<Employee> employees = objectMapper.readValue(response, new TypeReference<List<Employee>>(){});
                           mTextView.setText(employees);
                       }
                       catch (IOException e) {
