@@ -148,7 +148,7 @@ String jsonObect = response; //we are getting in from the onResponse in the *Mai
 
 try {
     List<Employee> employees = objectMapper.readValue(response, new TypeReference<List<Employee>>(){});
-    mTextView.setText(employeesList);
+    mTextView.setText("" + employeesList);
 }
 catch (IOException e) {
     e.printStackTrace();
