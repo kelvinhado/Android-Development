@@ -85,11 +85,12 @@ String url ="http://the_url_of_the_server_that_is_supposed_to_send_you_a_Json.co
 StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
       //if its works
         new Response.Listener<String>() {
-        @Override
-        public void onResponse(String response) {
-            /* TODO */
-            //Display the first 500 characters of the response string.
-            mTextView.setText("Response is: "+ response.substring(0,500));
+          @Override
+          public void onResponse(String response) {
+              /* TODO */
+              //Display the first 500 characters of the response string.
+              mTextView.setText("Response is: "+ response.substring(0,500));
+          }
         },
 
         // if it does not work
