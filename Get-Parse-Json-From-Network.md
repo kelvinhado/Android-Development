@@ -141,6 +141,7 @@ public class Employee {
 
 We are now ready to parse the Json. you just have to do like this :
 
+in *MainActivity.java*
 ```java
 //use the ObjectMapper from org.codehaus.jackson.map.ObjectMapper
 final ObjectMapper objectMapper = new ObjectMapper();
@@ -160,6 +161,7 @@ catch (IOException e) {
 
 This is how does look the MainActivty.java when we download and then read the json :
 
+in *MainActivity.java*
 ```java
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -220,7 +222,58 @@ public class MainActivity extends ActionBarActivity {
 }
 ```
 
-### 5) Update coming soon ..
+### 5) Improvment of the using of RequestQueue
 
-This is the easy way to do that kind of operatn in Android. But we still have to do some improvment to not have to call *RequestQueue* all the time for example, by using an Application class.
-I will add this in the next update of this file.
+this line :
+>  RequestQueue queue = Volley.newRequestQueue(this);
+
+does not have to be called everytime, it's better to Instantiate it once and use the same one everywhere in our application.
+To do this, we have to create an application class that we will called *VolleyApplication* (for example) :
+
+#### a) create Application class
+*VolleyApplication.java*
+```java
+import android.app.Application;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+
+//TODO Add this line to the manifest : android:name=".http.VolleyApplication" in application node
+public class VolleyApplication extends Application {
+
+    private static RequestQueue requestQueue;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        requestQueue = Volley.newRequestQueue(this);
+    }
+
+    public static RequestQueue getRequestQueue() {
+        return requestQueue;
+    }
+}
+```
+#### b) update the manifest
+
+In fact, we have to tell in the manifest that we want our Application class to be **loaded** at the beginning of the application. Otherwise, the class will never be called and executed.
+
+Just add this line inside the <application> node in the manifest like below :
+*AndroidManifest.xml*
+```xml
+<manifest (...)>
+    (...)
+    <application
+      android:name=".network.VolleyApplication"
+      (...)
+    </application>
+</manifest>
+```
+
+#### c) ready to use
+
+Now, you don't need to Instantiate the RequestQueue. When you need it (no matter where in your app), you can access it by using :
+```java
+VolleyApplication.getRequestQueue().add(myRequest);
+```
+
+### 6) Improvment : create custom jacksonRequest that extends jacksonRequest
