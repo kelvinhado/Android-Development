@@ -1,3 +1,4 @@
+[link text](#abcd)
 ## Download and Parse Json object
 
 Most of the connections between servers and clients are using Json format.
@@ -157,6 +158,7 @@ catch (IOException e) {
 
 ```
 
+
 ### 4) Final result for MainActivity.java
 
 This is how does look the MainActivty.java when we download and then read the json :
@@ -277,3 +279,74 @@ VolleyApplication.getRequestQueue().add(myRequest);
 ```
 
 ### 6) Improvment : create custom jacksonRequest that extends jacksonRequest
+We can simplify the string request by creating a custom class that will extend jacksonRequest like below :
+```java
+import com.android.volley.Response;
+
+public class EmployeesRequest extends JacksonRequest<Employees> {
+
+    private static final String url = "https://www.giveme_employees_list";
+    public EmployeesRequest(Response.Listener<Station> listener, Response.ErrorListener errorListener) {
+        super(Method.GET, url ,Employees.class, listener, errorListener);
+
+    }
+
+}
+```
+note the **Employees** class in *JacksonRequest<Employees>*, Employees.java is a new class that will just extends ArrayList<Employee>.
+You can add parameters to the constructor if needed.
+
+Now we don't have to specify anymore the "Method.GET, url, type of class". It will be donne once in this class.
+<a name="abcd"></a>
+This is how the activity look like at the end :
+in *MainActivity.java*
+```java
+import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
+import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.codehaus.jackson.map.ObjectMapper;
+import java.io.IOException;
+
+
+public class MainActivity extends ActionBarActivity {
+
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+      super.onCreate(savedInstanceState);
+      setContentView(R.layout.activity_main);
+
+      final TextView mTextView = (TextView) findViewById(R.id.tv1);
+
+      EmployeesRequest employeesRequest = new EmployeesRequest(Request.Method.GET, url,
+              //if its works
+              new Response.Listener<Employees>() {
+              @Override
+              public void onResponse(EmployeeseEmployees) {
+                  try {
+                          mTextView.setText(employees);
+                      }
+                      catch (IOException e) {
+                          e.printStackTrace();
+                      }
+                  }
+              },
+              // if it does not work
+              new Response.ErrorListener() {
+              @Override
+              public void onErrorResponse(VolleyError error) {
+                  mTextView.setText("That didn't work!");
+              }
+      });
+      // Add the request to the RequestQueue.
+      VolleyApplication.getRequestQueue().add(employeesRequest);
+    }
+}
