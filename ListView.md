@@ -110,7 +110,7 @@ public class ListAdapter extends ArrayAdapter {
         // we finally set our values here
         Student student = listStudent.get(position);
         holder.element1.setText(student.getFirstName());
-        holder.element2.setText(student.getLastName())
+        holder.element2.setText(student.getLastName());
         return convertView;
 
     }
