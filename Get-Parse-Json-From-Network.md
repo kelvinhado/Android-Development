@@ -29,7 +29,7 @@ add thos two lines in the <manifest> tag :
 
 There is serveral way to add libraries (cf google) you can download them manually or do like this
 
-You have to add two libraries in the *build.grable (Module App)* in Grable Scripts tree.
+You have to add two libraries in the *build.gradle (Module App)* in gradle Scripts tree.
 You have to add those lines in dependencies :
 ```xml
 compile 'com.fasterxml.jackson.core:jackson-core:2.4.2'
@@ -46,9 +46,9 @@ packagingOptions {
 }
 ```
 
-So this is how the *build.grable* file look like :
+So this is how the *build.gradle* file look like :
 
-*build.grable*
+*build.gradle*
 ```xml
 apply plugin: 'com.android.application'
 android {
@@ -90,7 +90,7 @@ StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
           public void onResponse(String response) {
               /* TODO */
               //Display the first 500 characters of the response string.
-              mTextView.setText("Response is: "+ response.substring(0,500));
+              mTextView.setText("Response is: "+ response);
           }
         },
 
@@ -146,7 +146,7 @@ in *MainActivity.java*
 ```java
 //use the ObjectMapper from org.codehaus.jackson.map.ObjectMapper
 final ObjectMapper objectMapper = new ObjectMapper();
-String jsonObect = response; //we are getting in from the onResponse in the *MainActivity.java*
+String jsonObject = response; //we are getting in from the onResponse in the *MainActivity.java*
 
 try {
     List<Employee> employees = objectMapper.readValue(response, new TypeReference<List<Employee>>(){});
