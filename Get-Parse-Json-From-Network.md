@@ -112,7 +112,7 @@ In this example you have to set the URL to the server and implement those two me
 You can see that the response the Json is in the object *response* (the attribute the the onResponse method).
 So now we have to parse this json into an array of java objects.
 
-note that the *mTextView* is a TextView already define in the main_activity.xml and matched.
+note that the *mTextView* is a TextView that you define in the main_activity.xml and matched.
 
 ### 3) Parse Json to Java Object Using Jackson
 
@@ -279,7 +279,62 @@ VolleyApplication.getRequestQueue().add(myRequest);
 ```
 
 ### 6) Improvment : create custom jacksonRequest that extends jacksonRequest
-We can simplify the string request by creating a custom class that will extend jacksonRequest like below :
+
+#### 6.1) create a jacksonRequest.java  (COPY and PASTE it directly)
+```java
+
+public class JacksonRequest<T> extends Request<T> {
+    private final ObjectMapper objectMapper;
+    private final Class<T> mClazz;
+    private final Response.Listener<T> mListener;
+
+    public JacksonRequest(int method, String url, Class<T> clazz,
+                          Response.Listener<T> listener, Response.ErrorListener errorListener) {
+        super(method, url, errorListener);
+        this.mClazz = clazz;
+        this.mListener = listener;
+        objectMapper = new ObjectMapper();
+    }
+
+    public JacksonRequest(int method, String url, Class<T> clazz,
+                          Response.Listener<T> listener, Response.ErrorListener errorListener, ObjectMapper objectMapper) {
+        super(method, url, errorListener);
+        this.mClazz = clazz;
+        this.mListener = listener;
+        this.objectMapper = objectMapper;
+    }
+
+    @Override
+    protected void deliverResponse(T response) {
+        mListener.onResponse(response);
+    }
+
+    @Override
+    protected Response<T> parseNetworkResponse(NetworkResponse response) {
+
+        Log.d("reponse ", response.toString());
+
+        try {
+            String json = new String(response.data,
+                    HttpHeaderParser.parseCharset(response.headers));
+            return Response.success(objectMapper.readValue(json, mClazz),
+                    HttpHeaderParser.parseCacheHeaders(response));
+        } catch (UnsupportedEncodingException e) {
+            return Response.error(new ParseError(e));
+        } catch (JsonMappingException e) {
+            return Response.error(new ParseError(e));
+        } catch (JsonParseException e) {
+            return Response.error(new ParseError(e));
+        } catch (IOException e) {
+            return Response.error(new ParseError(e));
+        }
+    }
+}
+
+
+```
+
+creating a custom class that will extend jacksonRequest like below :
 ```java
 import com.android.volley.Response;
 
@@ -293,11 +348,12 @@ public class EmployeesRequest extends JacksonRequest<Employees> {
 
 }
 ```
-note the **Employees** class in *JacksonRequest<Employees>*, Employees.java is a new class that will just extends ArrayList<Employee>.
-You can add parameters to the constructor if needed.
+>note that the **Employees.class** in *JacksonRequest<Employees>*, Employees.java is a new class that will just extends ArrayList<Employee>.
+>You can add parameters to the constructor if needed.
 
 Now we don't have to specify anymore the "Method.GET, url, type of class". It will be donne once in this class.
-<a name="abcd"></a>
+
+
 This is how the activity look like at the end :
 in *MainActivity.java*
 ```java
@@ -326,11 +382,11 @@ public class MainActivity extends ActionBarActivity {
 
       final TextView mTextView = (TextView) findViewById(R.id.tv1);
 
-      EmployeesRequest employeesRequest = new EmployeesRequest(Request.Method.GET, url,
+      EmployeesRequest employeesRequest = new EmployeesRequest(
               //if its works
               new Response.Listener<Employees>() {
               @Override
-              public void onResponse(EmployeeseEmployees) {
+              public void onResponse(Employees employees) {
                   try {
                           mTextView.setText(employees);
                       }
