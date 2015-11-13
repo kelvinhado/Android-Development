@@ -1,4 +1,4 @@
-[link text](#abcd)
+
 ## Download and Parse Json object
 
 Most of the connections between servers and clients are using Json format.
@@ -11,6 +11,7 @@ https://github.com/FasterXML/jackson-databind
 
 We will first get the json from the server (using Volley) and then automatically convert this Json to a ObjectArray.
 
+> Note that the code below works in an activity, if you decide to work with fragment, you will probably have to change 'this' to getActivity()
 ### 1) Setup the android project
 
 #### a) add Internet permissions in the *AndroidManifest*
@@ -88,8 +89,8 @@ StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
         new Response.Listener<String>() {
           @Override
           public void onResponse(String response) {
+              //note that the *mTextView* is a TextView that you define in the main_activity.xml and matched. */
               /* TODO */
-              //Display the first 500 characters of the response string.
               mTextView.setText("Response is: "+ response);
           }
         },
@@ -112,7 +113,7 @@ In this example you have to set the URL to the server and implement those two me
 You can see that the response the Json is in the object *response* (the attribute the the onResponse method).
 So now we have to parse this json into an array of java objects.
 
-note that the *mTextView* is a TextView that you define in the main_activity.xml and matched.
+
 
 ### 3) Parse Json to Java Object Using Jackson
 
