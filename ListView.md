@@ -32,7 +32,7 @@ Attributes of the Activity:
 
         	lvStudent = (ListView) findViewById(R.id.listViewStudent);
 			    lvAdapter = new ListAdapter(this, studentList);
-			    lv.setAdapter(lvAdapter);*
+			    lvStudent.setAdapter(lvAdapter);*
     }
 
 ```
