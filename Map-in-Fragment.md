@@ -1,6 +1,6 @@
 ### How to insert a Google Map into a fragment
 
-- MainActivity.class : Activity that will hole the fragment
+- MainActivity.class : Activity that will hold the fragment
 - MapsFragment.class : fragment that will hold the Map
 - fragment_maps.xml : layout for the fragment
 
