@@ -1,6 +1,6 @@
-##Basic Networking on Android 
+## Basic Networking on Android 
 
-###1) Build the URL
+### 1) Build the URL
 
 ```java
     public static URL buildUrl() {
@@ -22,7 +22,7 @@
     }
 ```
 
-###2) Get the response 
+### 2) Get the response 
 
 ```java
   public static String getResponseFromHttpUrl(URL url) throws IOException {
@@ -45,6 +45,6 @@
     }
 ```
 
-###3) Parse the response 
+### 3) Parse the response 
 
 Consider using Jackson to parse the response.

@@ -1,11 +1,11 @@
-##How to add and use items to the menu of an Activity
+## How to add and use items to the menu of an Activity
 
 We you create a new blank Activity in Android Studio, It actually create 3 files :
 - src/your.package/MainActivity.java
 - res/layout/activity_main.xml
 - res/menu/menu_main_activity.xml
 
-###1) add items to the menu xml file.
+### 1) add items to the menu xml file.
 
 *menu_main_activity*
 ```xml
@@ -27,7 +27,7 @@ We you create a new blank Activity in Android Studio, It actually create 3 files
 </menu>
 ```
 
-###2) implement methods to use our menu item
+### 2) implement methods to use our menu item
 
 *MainActivity.java*
 ```java
