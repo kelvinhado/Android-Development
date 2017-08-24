@@ -59,7 +59,14 @@ public class Shop {
 
 ### 2 - Create the adapter 
 
-1) Create an Adapter that extends RecyclerView.Adapter<ShopViewHolder.
+The adapter is responsible of 
+- Creating a ViewHolder object for each RecyclerView item
+- Returning the number of items in the data source
+- Binding data from data source to each item
+- Inflating each item view that will be displayed
+
+
+1) Create an Adapter that extends RecyclerView.Adapter<ShopViewHolder>.
 2) Add a ArrayList member variable that will hold the list of shops.
 3) Populate this ArrayList using the constructor
 
@@ -151,6 +158,10 @@ public class ShopsActivity extends AppCompatActivity {
     }
 }
 ```
+A LinearLayoutManager is responsible for measuring and positioning item views within a RecyclerView into a linear list. This means that it can produce either a horizontal or vertical list depending on which parameter you pass in to the LinearLayoutManager constructor. By default, if you don't specify an orientation, you get a vertical list. In our case, we want a vertical list, so we don't need to pass in an orientation flag tonthe LinearLayoutManager constructor.
+
+There are other LayoutManagers available to display your data in uniform grids, staggered grids, and more! See the developer documentation for more details.
+
 
 ### 6 - Handle item click 
 
