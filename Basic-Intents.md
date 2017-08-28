@@ -70,6 +70,7 @@ private void shareText(String textToShare) {
             .setText(textToShare)
             .startChooser();
 }
+```
 
 You can think of *MIME types* similarly to file extensions. They aren't the exact same, but MIME types help a computer determine which applications can open which content. Forexample, if you double click on a .pdf file, you will be presented with a list of programs that can open PDFs. Specifying the MIME type as text/plain has a similar affect on our implicit Intent. With text/plain specified, all apps that can handle text content
 in some way will be offered when we call startActivity on this particular Intent.
