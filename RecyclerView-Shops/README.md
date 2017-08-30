@@ -195,3 +195,54 @@ public ShoplistViewHolder(View itemView) {
 ```
 5) The activity holding the adapter will then have to implements our ListItemClickListener.
 
+
+### 7 - Handle swipe action
+
+We will use the ItemTouchHelper with a SimpleCallback that handles both LEFT and RIGHT swipe directions
+
+*ShopsActivity.java*
+```java
+new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            //do nothing, we only care about swiping
+            return false;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+            //get the id of the item being swiped
+            long id = (long) viewHolder.itemView.getTag();
+            // perform custom action like deleting an object inthe database.
+            //update the list
+            mAdapter.swapCursor(updatedListCursor);
+        }
+    }).attachToRecyclerView(mRecyclerView); //don't forget to attach the helper to the recyclerView.
+```
+
+We used the "viewHolder.itemView.getTag()" to identify the item we want to delete. To be able to do so, we need to set that value in the Adapter.
+
+*ShopListAdapter.java*
+```java
+@Override
+public void onBindViewHolder(GuestViewHolder holder, int position) {
+    ...
+    holder.itemView.setTag(id);
+}
+
+/**
+ * Swaps the Cursor currently held in the adapter with a new one
+ * and triggers a UI refresh
+ *
+ * @param newCursor the new cursor that will replace the existing one
+ */
+public void swapCursor(Cursor newCursor) {
+    // Always close the previous mCursor first
+    if (mCursor != null) mCursor.close();
+    mCursor = newCursor;
+    if (newCursor != null) {
+        // Force the RecyclerView to refresh
+        this.notifyDataSetChanged();
+    }
+}
+```

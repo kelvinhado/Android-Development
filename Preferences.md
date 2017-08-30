@@ -1,4 +1,6 @@
-## Preferences
+## Preferences & Settings
+
+Material settings : https://material.io/guidelines/patterns/settings.html#
 
 ### Setup the SettingsActivity
 
@@ -242,6 +244,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     <string name="pref_color_blue_value" translatable="false">blue</string>
     <string name="pref_color_green_value" translatable="false">green</string>
 </resources>
+```
 
 *MainActivity.java*
 ```java
@@ -399,5 +402,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     }
 }
 ```
+
+
 
 
