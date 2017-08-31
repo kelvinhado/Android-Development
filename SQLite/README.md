@@ -1,5 +1,7 @@
 #Data Storage SQL Lite
 
+Database operation may take some time, so it's important make operation calls off the main thread
+
 ## Create the contract for the DB
 
 Create an inner class that specifies the table and column name. Note that the column ID is created by default.
