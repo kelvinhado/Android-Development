@@ -7,7 +7,25 @@
 #### 1) Get the API Key
 
 First of all, you need to get the API key from Google and put it in the Manifest.
+
 https://console.developers.google.com
+
+https://developers.google.com/maps/documentation/android-api/start?hl=fr
+
+*AndroidManifest.xml*
+```xml
+<meta-data
+    android:name="com.google.android.maps.v2.API_KEY"
+    android:value="@string/gmaps_api_key" />
+```
+add the dependancy to the gradle file 
+```gradle
+dependencies {
+    ...
+    compile 'com.google.android.gms:play-services:11.0.2'
+}
+
+```
 
 #### 2) fragment_maps.xml
 

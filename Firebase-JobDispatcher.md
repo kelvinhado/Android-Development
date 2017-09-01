@@ -1,6 +1,6 @@
 # Firebase JobDispatcher 
 
-https://github.com/firebase/firebase-jobdispatcher-android#comparison-to-other-libraries
+>>>>>> :) https://github.com/firebase/firebase-jobdispatcher-android#comparison-to-other-libraries
 
 Requires with google play service 
 - Firebase JobDispatcher  	API 9
