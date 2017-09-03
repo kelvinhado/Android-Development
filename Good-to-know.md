@@ -29,3 +29,12 @@ String output = getResources().getQuantityString(
 					chargingReminders, 	// to know which string item should be selected
 					chargingReminders);	// the int that will be displayed
 ```
+
+### UI
+
+Inside TextViews, We should not use android:text to display fake data;
+Instead we should use : tools:text="@string/patch_to_the_fake_data"
+
+--
+Hierarchy Viewer tools allow you to check performance of your layouts. 
+Always remember that flatter trees perform better and help with loading time which can lead to happier users.
