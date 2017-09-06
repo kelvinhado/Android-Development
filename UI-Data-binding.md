@@ -1,5 +1,7 @@
 #UI-Data-binding
 
+https://developer.android.com/topic/libraries/data-binding/index.html
+
 Data binding is a cool feature that allow you to get rid of our old friend findViewById() ;)
 Use an android studio version >2.1
 
