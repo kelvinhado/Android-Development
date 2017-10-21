@@ -38,3 +38,16 @@ Instead we should use : tools:text="@string/patch_to_the_fake_data"
 --
 Hierarchy Viewer tools allow you to check performance of your layouts. 
 Always remember that flatter trees perform better and help with loading time which can lead to happier users.
+
+### Avoid leak window
+
+When using loader or dialog you may face issue with leak window. Means that you want to show or hide an object linked to an activity that is not longer visible or distroyed. 
+You can use lifecycle methods like :
+- isDestroyed();
+- isFinishing();
+- progressDialog.isShowing();
+
+#### Material design 
+
+- https://material.io/guidelines/style/color.html#color-usability
+- https://www.materialpalette.com
